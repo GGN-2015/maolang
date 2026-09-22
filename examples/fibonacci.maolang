@@ -1,0 +1,23 @@
+// Print the first eight Fibonacci numbers.
+count := 8
+index := 0
+current := 0
+next := 1
+
+step := {
+    ! late {! print {$_{current}}}
+    ! late {! eval {$_{current} + $_{next}} sum}
+    ! late {current := {$_{next}}}
+    ! late {next := {$_{sum}}}
+    ! late {! eval {$_{index} + 1} index}
+    ! late {& {$_{loop}}}
+}
+
+loop := {
+    ! late {! eval {$_{index} < $_{count}} keepGoing}
+    ! late {! if {$_{keepGoing}} {$_{step}} {} selectedStep}
+    ! late {& {$_{selectedStep}}}
+}
+
+! print {First ${count} Fibonacci numbers:}
+& {${loop}}

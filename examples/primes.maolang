@@ -1,0 +1,20 @@
+// Print every prime number up to ten.
+limit := 10
+candidate := 2
+
+testAndAdvance := {
+    ! late {! eval {all($_{candidate} % divisor != 0 for divisor in range(2, int($_{candidate} ** 0.5) + 1))} isPrime}
+    ! late {! if {$_{isPrime}} {! print {$_{candidate}}} {} printStep}
+    ! late {& {$_{printStep}}}
+    ! late {! eval {$_{candidate} + 1} candidate}
+    ! late {& {$_{loop}}}
+}
+
+loop := {
+    ! late {! eval {$_{candidate} <= $_{limit}} keepGoing}
+    ! late {! if {$_{keepGoing}} {$_{testAndAdvance}} {} selectedStep}
+    ! late {& {$_{selectedStep}}}
+}
+
+! print {Prime numbers up to ${limit}:}
+& {${loop}}
